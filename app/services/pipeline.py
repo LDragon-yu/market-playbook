@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import threading
 import uuid
 from datetime import datetime
 from pathlib import Path
@@ -26,6 +27,7 @@ class ReviewPipeline:
         self.review_engine, self.plan_engine = ReviewEngine(), PlanEngine()
         self.validation_engine = ValidationEngine()
         self.intelligence_engine = IntelligenceEngine(self.llm)
+        self._job_guard = threading.Lock()
 
     @staticmethod
     def _date(value: str | None) -> str | None:
@@ -54,8 +56,13 @@ class ReviewPipeline:
         return {"status": "ok", "trade_date": trade_date, "target_date": target}
 
     def run_post_market(self, trade_date: str | None = None, *, demo: bool = False) -> dict[str, Any]:
-        with job_lock(self.settings.data_dir / "job.lock"):
-            return self._run_post_market(trade_date, demo=demo)
+        if not self._job_guard.acquire(blocking=False):
+            raise RuntimeError("另一个盘后/盘前任务正在运行，请等待其结束后再试。")
+        try:
+            with job_lock(self.settings.data_dir / "job.lock"):
+                return self._run_post_market(trade_date, demo=demo)
+        finally:
+            self._job_guard.release()
 
     def _run_post_market(self, trade_date: str | None, *, demo: bool) -> dict[str, Any]:
         job_id = self.db.start_job("post_market")
@@ -94,8 +101,13 @@ class ReviewPipeline:
 
     def run_pre_market(self, target_date: str | None = None, *, demo: bool = False,
                        force: bool = False) -> dict[str, Any]:
-        with job_lock(self.settings.data_dir / "job.lock"):
-            return self._run_pre_market(target_date, demo=demo, force=force)
+        if not self._job_guard.acquire(blocking=False):
+            raise RuntimeError("另一个盘后/盘前任务正在运行，请等待其结束后再试。")
+        try:
+            with job_lock(self.settings.data_dir / "job.lock"):
+                return self._run_pre_market(target_date, demo=demo, force=force)
+        finally:
+            self._job_guard.release()
 
     def _run_pre_market(self, target_date: str | None, *, demo: bool, force: bool) -> dict[str, Any]:
         job_id = self.db.start_job("pre_market")
