@@ -1,0 +1,15 @@
+.env
+.venv/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+*.py[cod]
+*.log
+data/*.db
+data/*.db-*
+data/runtime.env
+data/*.lock
+data/logs/
+data/uploads/*
+!data/uploads/.gitkeep
+data/.fuse_hidden*

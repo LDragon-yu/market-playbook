@@ -1,0 +1,2 @@
+# Official SDK, only needed when enabling the Feishu bidirectional bot.
+lark-oapi>=1.4,<2

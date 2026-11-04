@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>见势 · A股复盘与预案</title>
+  <link rel="stylesheet" href="/static/styles.css">
+  <link rel="stylesheet" href="/static/portfolio.css">
+  <link rel="stylesheet" href="/static/config.css">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand"><span class="brand-mark">见</span><div><strong>见势</strong><small>JIANSHI LAB</small></div></div>
+      <nav>
+        <button class="nav active" data-view="review"><span>◫</span>盘后复盘</button>
+        <button class="nav" data-view="plan"><span>◇</span>盘前预案</button>
+        <button class="nav" data-view="portfolio"><span>▣</span>持仓监控</button>
+        <button class="nav" data-view="qa"><span>问</span>个股问答</button>
+        <button class="nav" data-view="intel"><span>◎</span>情报中心</button>
+        <button class="nav" data-view="system"><span>⚙</span>数据与任务</button>
+      </nav>
+      <div class="side-note"><span class="dot"></span><div><b>纪律优先</b><small>没有触发条件，就没有交易</small></div></div>
+    </aside>
+    <main>
+      <header>
+        <div><p class="eyebrow">MARKET INTELLIGENCE</p><h1 id="page-title">盘后复盘</h1></div>
+        <div class="header-actions">
+          <select id="date-select" aria-label="复盘日期"></select>
+          <button class="ghost" id="refresh">刷新</button>
+          <button class="primary" id="run-main">生成盘后复盘</button>
+        </div>
+      </header>
+      <div id="notice" class="notice hidden"></div>
+      <section id="content"><div class="loading">正在读取市场结构…</div></section>
+      <footer>分析结果仅用于研究与计划管理，不构成投资建议。个股候选必须服从市场门槛与失效条件。</footer>
+    </main>
+  </div>
+  <dialog id="job-dialog">
+    <form method="dialog"><button class="dialog-close">×</button></form>
+    <p class="eyebrow">RUN ANALYSIS</p><h2 id="dialog-title">运行任务</h2>
+    <label>日期（留空自动识别）<input id="job-date" placeholder="YYYYMMDD"></label>
+    <label class="check"><input id="job-demo" type="checkbox"> 使用演示数据</label>
+    <button class="primary wide" id="job-submit">开始运行</button>
+    <p class="muted">真实盘后任务需要 Tushare Token；盘前任务会合并外围行情与已导入情报。</p>
+  </dialog>
+  <script src="/static/app.js"></script>
+  <script src="/static/portfolio.js"></script>
+  <script src="/static/config.js"></script>
+  <script src="/static/channel.js"></script>
+</body>
+</html>

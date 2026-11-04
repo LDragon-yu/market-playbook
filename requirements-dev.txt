@@ -1,0 +1,6 @@
+# Development, testing and CI only.
+-r requirements.txt
+
+pytest>=8.4,<10
+httpx>=0.28,<1
+ruff>=0.6,<1

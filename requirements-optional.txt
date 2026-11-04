@@ -1,0 +1,3 @@
+# Optional post-close minute bars from public web data.
+akshare>=1.17,<2
+pandas>=2.3,<4

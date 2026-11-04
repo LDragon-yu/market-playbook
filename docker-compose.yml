@@ -1,0 +1,12 @@
+services:
+  app:
+    build: .
+    container_name: jianshi
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      RUNTIME_ENV_PATH: /app/data/runtime.env
+    ports:
+      - "127.0.0.1:8000:8000"
+    volumes:
+      - ./data:/app/data
