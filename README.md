@@ -25,7 +25,7 @@
 ## 本地启动
 
 ```powershell
-cd C:\Users\ycl\Desktop\a-share-review
+cd 项目目录
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install -r requirements.txt

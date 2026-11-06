@@ -23,7 +23,7 @@ def request_json(
     timeout: int = 30,
     retries: int = 2,
 ) -> dict[str, Any]:
-    request_headers = {"User-Agent": "a-share-review/0.2", "Accept-Encoding": "gzip", **(headers or {})}
+    request_headers = {"User-Agent": "market-playbook/0.3.1", "Accept-Encoding": "gzip", **(headers or {})}
     body: bytes | None = None
     if payload is not None:
         body = json.dumps(payload, ensure_ascii=False).encode("utf-8")

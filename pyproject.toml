@@ -1,5 +1,5 @@
 [project]
-name = "a-share-review"
+name = "market-playbook"
 version = "0.3.1"
 description = "A-share post-market review and pre-market scenario planning dashboard"
 requires-python = ">=3.11"

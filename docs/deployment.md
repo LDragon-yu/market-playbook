@@ -5,8 +5,8 @@
 服务器上以仓库为准，`.env`、`data/` 不进入版本库：
 
 ```bash
-git clone <你的仓库地址> /opt/a-share-review
-cd /opt/a-share-review
+git clone <你的仓库地址> /opt/market-playbook
+cd /opt/market-playbook
 cp .env.example .env
 # 编辑 .env（至少 TUSHARE_TOKEN、APP_ENV=production、APP_USERNAME、APP_PASSWORD）
 docker compose up -d --build
@@ -15,7 +15,7 @@ docker compose up -d --build
 日常升级前先备份数据，再拉取新版本重建：
 
 ```bash
-cd /opt/a-share-review
+cd /opt/market-playbook
 cp -r data data.bak.$(date +%F)
 git pull
 docker compose up -d --build
@@ -42,8 +42,8 @@ curl http://127.0.0.1:8000/health
 
 ```cron
 CRON_TZ=Asia/Shanghai
-10 17 * * 1-5 cd /opt/a-share-review && docker compose exec -T app python -m scripts.job post-market >> data/cron.log 2>&1
-20 8  * * 1-5 cd /opt/a-share-review && docker compose exec -T app python -m scripts.job pre-market >> data/cron.log 2>&1
+10 17 * * 1-5 cd /opt/market-playbook && docker compose exec -T app python -m scripts.job post-market >> data/cron.log 2>&1
+20 8  * * 1-5 cd /opt/market-playbook && docker compose exec -T app python -m scripts.job pre-market >> data/cron.log 2>&1
 ```
 
 节假日运行不会凭空产生报告：盘后任务会读取最近交易日，数据库按交易日覆盖保存。盘前最好结合中国节假日由云平台调度器控制。
